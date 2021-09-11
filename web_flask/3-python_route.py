@@ -35,6 +35,8 @@ def python(text='is cool'):
     """ outputs 'Python <text>'
         uses 'is cool' if <text> not supplied
     """
+    text = text.replace('_', ' ')
+    
     app.url_map.strict_slashes = False
     return ('Python {}'.format(text))
 
