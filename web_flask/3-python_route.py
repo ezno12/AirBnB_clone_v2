@@ -29,16 +29,15 @@ def c(text):
     return 'C {}'.format(text)
 
 
-@app.route('/python/')  # defaults to 'is cool'
+@app.route('/python/')
 @app.route('/python/<text>')
 def python(text='is cool'):
     """ outputs 'Python <text>'
         uses 'is cool' if <text> not supplied
     """
-    text = text.replace('_', ' ')
-    
+
     app.url_map.strict_slashes = False
-    return ('Python {}'.format(text))
+    return ('Python {:s}'.format(text))
 
 
 if __name__ == '__main__':
