@@ -1,6 +1,6 @@
 #!/usr/bin/python3
 """
-3-python_route.py - starts a Flask web application
+4-number_route.py - starts a Flask web application
 """
 from flask import Flask
 app = Flask(__name__)
@@ -29,26 +29,21 @@ def c(text):
     return 'C {}'.format(text)
 
 
-@app.route('/python/')
+@app.route('/python/')  # defaults to 'is cool'
 @app.route('/python/<text>')
 def python(text='is cool'):
     """ outputs 'Python <text>'
         uses 'is cool' if <text> not supplied
     """
-    text = text.replace('_', ' ')
-
     app.url_map.strict_slashes = False
-    return ('Python {:s}'.format(text))
+    return ('Python {}'.format(text))
 
 
 @app.route('/number/<int:n>')
-def python(n):
-    """
-    output integer
-    """
+def number(n):
+    """ only returns if n's value is an int """
     app.url_map.strict_slashes = False
-    return '{} is a number'.format(n)
-
+    return ('{} is a number'.format(n))
 
 if __name__ == '__main__':
     app.run(host='0.0.0.0', port=5000)
