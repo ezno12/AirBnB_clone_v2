@@ -6,10 +6,9 @@ from flask import Flask
 app = Flask(__name__)
 
 
-@app.route('/')
+@app.route('/', strict_slashes = False)
 def hello_hbnb():
     """ outputs 'Hello HBNB!' """
-    app.url_map.strict_slashes = False
     return 'Hello, HBNB!'
 
 if __name__ == '__main__':
