@@ -1,6 +1,6 @@
 #!/usr/bin/python3
 """
-0-hell_route - starts a Flask web app
+2-c_roiute - starts a Flask web application
 """
 from flask import Flask
 app = Flask(__name__)
@@ -15,23 +15,14 @@ def hello_hbnb():
 
 @app.route('/hbnb')
 def hbnb():
-    """ outputs 'Hello HBNB!' """
+    """ outputs 'HBNB' """
     app.url_map.strict_slashes = False
     return 'HBNB'
 
 
 @app.route('/c/<text>')
 def c(text):
-    "output txt"
-    text = text.replace('_', ' ')
-
-    app.url_map.strict_slashes = False
-    return 'C {}'.format(text)
-
-
-@app.route('/c/<text>')
-def c(text):
-    "output txt"
+    """ outputs 'C <text> """
     text = text.replace('_', ' ')
 
     app.url_map.strict_slashes = False
