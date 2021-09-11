@@ -41,13 +41,13 @@ def python(text='is cool'):
     return ('Python {:s}'.format(text))
 
 
-@app.route('/number/<n>')
+@app.route('/number/<int:n>')
 def python(n):
     """
     output integer
     """
     app.url_map.strict_slashes = False
-    return ('{} is a number'.format(n))
+    return '{} is a number'.format(n)
 
 
 if __name__ == '__main__':
