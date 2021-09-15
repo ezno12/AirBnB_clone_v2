@@ -1,38 +1,39 @@
 #!/usr/bin/python3
-"""
-State Class from Models Module
-"""
-
-from models.base_model import BaseModel, Base
+"""This is the state class"""
 import models
-from sqlalchemy import String, Column
+from models.base_model import BaseModel, Base
+from models.city import City
+from os import getenv
+from sqlalchemy import Column, Integer, String, ForeignKey
 from sqlalchemy.orm import relationship
-from os import environ, getenv
+from sqlalchemy.ext.declarative import declarative_base
 
 
 class State(BaseModel, Base):
-    """State class handles all application states"""
+    """This is the class for State
+    Attributes:
+        name: input name
+    """
 
-    if 'HBNB_TYPE_STORAGE' in environ and environ['HBNB_TYPE_STORAGE'] == 'db':
+    __tablename__ = "states"
 
-        __tablename__ = 'states'
+    if getenv('HBNB_TYPE_STORAGE') == 'db':
         name = Column(String(128), nullable=False)
-        cities = relationship("City", cascade="all, delete-orphan",
-                              backref="state")
+        cities = relationship('City', backref='state',
+                              cascade='all, delete-orphan')
     else:
-        name = ""
+        name = ''
 
-    if (getenv('HBNB_TYPE_STORAGE') != 'db'):
         @property
         def cities(self):
-            """ returns all city objects  associated with this State  """
+            """Returns the list of `City` instances
+            with `state_id` equals to the current
+            """
 
-            cities = models.storage.all('City').values()
+            cities = list()
 
-            results = [city for city in cities if city.state_id == self.id]
+            for _id, city in models.storage.all(City).items():
+                if city.state_id == self.id:
+                    cities.append(city)
 
-            return (results)
-
-    def __init__(self, *args, **kwargs):
-        """instantiates a new state"""
-        super().__init__(self, *args, **kwargs)
+            return cities
