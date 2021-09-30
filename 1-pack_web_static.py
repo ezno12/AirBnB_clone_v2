@@ -4,7 +4,8 @@ from fabric.api import local
 
 
 def do_pack():
-    """
+    """Generates a .tgz archive from the contents
+    of the web_static folder of this repository.
     """
 
     d = datetime.now()
