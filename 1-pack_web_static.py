@@ -1,6 +1,6 @@
 #!/usr/bin/python3
 from datetime import datetime
-from fabric.api import *
+from fabric.api import local
 
 
 def do_pack():
