@@ -1,13 +1,19 @@
 #!/usr/bin/env bash
 # deployment of abnb web_static
-rm /etc/nginx/sites-enabled/*~
-apt-get update
-apt-get install -y nginx
-service nginx start
+apt update
+apt install -y nginx
 
-mkdir -p /data/web_static/releases /data/web_static/shared /data/web_static/releases/test
-echo -e "<!DOCTYPE html>\n<html>\n    <head>\n    </head>\n    <body>\n        Holberton School\n    </body>\n</html>" | cat > /data/web_static/releases/test/index.html
-ln -sf /data/web_static/releases/test/ /data/web_static/current
-chown -R ubuntu:ubuntu  /data
-sed -i '40i\        location /hbnb_static {\n\t\talias /data/web_static/current;\n\t}\n' /etc/nginx/sites-enabled/default
+mkdir -p /data/web_static/releases/test/
+mkdir -p /data/web_static/shared/
+
+printf "<html>\n\t<head>\n\t</head>\n\t<body>\n\t\tHolberton School\n\t</body>\n</html>\n" | 
+tee /data/web_static/releases/test/index.html 
+
+ln -fs /data/web_static/releases/test/ /data/web_static/current
+
+chown -R ubuntu:ubuntu /data/
+loc_header="location \/hbnb\_static\/ {"
+loc_content="alias \/data\/web\_static\/current\/;"
+new_location="\n\t$loc_header\n\t\t$loc_content\n\t}\n"
+sed -i "37s/$/$new_location/" /etc/nginx/sites-available/default
 service nginx restart
