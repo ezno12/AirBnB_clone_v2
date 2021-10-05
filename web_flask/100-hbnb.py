@@ -6,6 +6,8 @@ from flask import render_template, url_for
 from models import storage
 from models.state import State
 from models.amenity import Amenity
+from models.place import Place
+from models.user import User
 
 if __name__ == '__main__':
     app = Flask(__name__, static_url_path='')
@@ -15,12 +17,6 @@ if __name__ == '__main__':
         """Display 'Hello HBNB!'
         """
         return 'Hello HBNB!'
-
-    @app.route('/hbnb', strict_slashes=False)
-    def hbnb():
-        """Display 'HBNB'
-        """
-        return 'HBNB'
 
     @app.route('/c/<text>', strict_slashes=False)
     def c(text):
@@ -113,6 +109,29 @@ if __name__ == '__main__':
         return render_template('10-hbnb_filters.html',
                                states=states, state_cities=cities,
                                amenities=amenities)
+
+    @app.route('/hbnb', strict_slashes=False)
+    def hbnb():
+        states = storage.all(State).values()
+        amenities = storage.all(Amenity).values()
+        places = storage.all(Place).values()
+        users = storage.all(User).values()
+        cities = list()
+        owners = list()
+
+        for state in states:
+            for city in state.cities:
+                cities.append(city)
+
+        for place in places:
+            for user in users:
+                if place.user_id == user.id:
+                    owners.append(user)
+
+        return render_template('100-hbnb.html',
+                               states=states, state_cities=cities,
+                               amenities=amenities, places=places,
+                               owners=owners)
 
     @app.teardown_appcontext
     def teardown_db(error):
