@@ -22,8 +22,10 @@ class FileStorage:
 
     def all(self, cls=None):
         """Returns all the objects
+
         If a class is specified, the method only
         returns the objects of same type.
+
         """
 
         if cls:

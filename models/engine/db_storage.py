@@ -16,9 +16,11 @@ all_classes = {"State", "City", "Amenity", "User", "Place", "Review"}
 
 class DBStorage:
     """...
+
     Attributes:
         __engine: The SQLAlchemy engine
         __session: The SQLAlchemy session
+
     """
 
     __engine = None

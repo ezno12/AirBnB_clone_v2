@@ -11,8 +11,10 @@ from sqlalchemy.ext.declarative import declarative_base
 
 class State(BaseModel, Base):
     """This is the class for State
+
     Attributes:
         name: input name
+
     """
 
     __tablename__ = "states"
